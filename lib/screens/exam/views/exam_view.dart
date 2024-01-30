@@ -33,7 +33,7 @@ class _ExamViewState extends State<ExamView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exam'),
+        title: Text(context.strings.examLabel),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -50,7 +50,7 @@ class _ExamViewState extends State<ExamView> {
                   SizedBox(
                     width: double.infinity,
                     child: Text(
-                      "${index + 1} of ${examData.length} Questions",
+                      "${index + 1} of ${examData.length} ${context.strings.questionsLabel}",
                       textAlign: TextAlign.start,
                       style: context.texts.labelSmall,
                     ),
@@ -58,7 +58,7 @@ class _ExamViewState extends State<ExamView> {
                   const SizedBox(height: 10.0),
                   Text(
                     examData[index].question,
-                    style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                    style: context.texts.titleLarge,
                   ),
                   IgnorePointer(
                     ignoring: btnPressed,
@@ -94,19 +94,19 @@ class _ExamViewState extends State<ExamView> {
                       onPressed: () async {
                         if (examData[index].selectedChoice != null) {
                           if (btnPressed) {
-                            btnText = "Submit";
+                            btnText = context.strings.submitLabel;
                             btnPressed = false;
 
                             if (_controller.page?.toInt() == examData.length - 1) {
                               String message = '';
                               if (score == 5) {
-                                message = 'Perfect! You are so awesome!';
+                                message = context.strings.perfectScoreMessage;
                               } else if (score >= 3 || score <= 4) {
-                                message = 'Wow! You are great!';
+                                message = context.strings.passingScoreMessage;
                               } else if (score >= 2 || score <= 1) {
-                                message = 'Better luck next time';
+                                message = context.strings.failedScoreMessage1;
                               } else {
-                                message = 'Uh Oh! Try again next time.';
+                                message = context.strings.failedScoreMessage2;
                               }
 
                               Navigator.pushReplacement(
@@ -129,16 +129,16 @@ class _ExamViewState extends State<ExamView> {
                                 score++;
                               }
                               if (_controller.page?.toInt() == examData.length - 1) {
-                                btnText = "See Result";
+                                btnText = context.strings.seeResultLabel;
                               } else {
-                                btnText = "Next Question";
+                                btnText = context.strings.nextQuestionLabel;
                               }
                               btnPressed = true;
                             });
                           }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Please choose an answer')),
+                            SnackBar(content: Text(context.strings.noChoiceSelectedMessage)),
                           );
                         }
                       },
@@ -168,17 +168,17 @@ class _ExamViewState extends State<ExamView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${isCorrect ? "Yey!" : "Oops!"} You are ${isCorrect ? "Correct" : "Wrong"}',
-                            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                            isCorrect ? context.strings.correctAnswer : context.strings.wrongAnswer,
+                            style: context.texts.labelLarge,
                           ),
                           const SizedBox(height: 10.0),
-                          const Text(
-                            'Explanation',
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                          Text(
+                            context.strings.explanationLabel,
+                            style: context.texts.labelLarge,
                           ),
                           Text(
                             examData[index].explanation,
-                            style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                            style: context.texts.labelSmall,
                           ),
                         ],
                       ),

@@ -31,7 +31,7 @@ class _ScreenState extends State<Screen> {
           onPopInvoked: (val) async {},
           child: Scaffold(
             appBar: AppBar(
-              title: Text('Exam'),
+              title: Text(context.strings.examLabel),
             ),
             body: SafeArea(
               child: base.BlocBuilder<Bloc, view.ViewState>(

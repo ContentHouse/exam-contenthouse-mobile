@@ -16,7 +16,7 @@ class ViewState extends base.ViewState {
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: Text(
-              'Server is Busy. Please go back and view it again',
+              context.strings.examError,
               textAlign: TextAlign.center,
               style: context.texts.headlineMedium,
             ),

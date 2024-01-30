@@ -11,7 +11,7 @@ class ExamResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exam Result'),
+        title: Text(context.strings.examResultLabel),
       ),
       body: Center(
         child: Column(
@@ -37,7 +37,7 @@ class ExamResultView extends StatelessWidget {
               onPressed: () async {
                 Navigator.pop(context);
               },
-              child: const Text('Return'),
+              child:  Text(context.strings.returnLabel),
             ),
           ],
         ),

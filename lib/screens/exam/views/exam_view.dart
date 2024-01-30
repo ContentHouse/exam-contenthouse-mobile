@@ -99,13 +99,18 @@ class _ExamViewState extends State<ExamView> {
 
                             if (_controller.page?.toInt() == examData.length - 1) {
                               String message = '';
+                              print(score);
                               if (score == 5) {
+                                print('PERFECT $score');
                                 message = context.strings.perfectScoreMessage;
-                              } else if (score >= 3 || score <= 4) {
+                              } else if (score == 3 || score == 4) {
+                                print('PASS $score');
                                 message = context.strings.passingScoreMessage;
-                              } else if (score >= 2 || score <= 1) {
+                              } else if (score == 2 || score == 1) {
+                                print('UH OH $score');
                                 message = context.strings.failedScoreMessage1;
                               } else {
+                                print('FAILED $score');
                                 message = context.strings.failedScoreMessage2;
                               }
 

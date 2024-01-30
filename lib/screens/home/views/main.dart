@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_exam/core/app/view.dart' as base;
+import 'package:mobile_exam/core/services/server.dart';
 
 import '../bloc.dart';
 
@@ -34,13 +35,19 @@ class ViewState extends base.ViewState {
                   Navigator.pushNamed(
                     context,
                     "/hint_2",
-                    // arguments: {"key": await context.bloc.serverKey},
+                    arguments: {"key": await context.bloc.serverKey},
                   );
                 },
                 child: Text(context.strings.homeHint2ButtonLabel),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Navigator.pushNamed(
+                    context,
+                    "/exam",
+                    arguments: {"key": await context.bloc.serverKey, "data": await context.server.data},
+                  );
+                },
                 child: Text(context.strings.homeExamButtonLabel),
               )
             ],

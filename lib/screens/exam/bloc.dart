@@ -1,14 +1,17 @@
-export 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
+
 import 'package:mobile_exam/core/app/bloc.dart' as base;
 import 'package:mobile_exam/core/extensions/common.dart';
 import 'package:mobile_exam/core/extensions/map.dart';
+import 'package:mobile_exam/core/provider/counter_provider.dart';
 import 'package:mobile_exam/core/services/server.dart';
+import 'package:provider/provider.dart';
 
-import 'views/main.dart' as main_view;
-import 'views/loading.dart' as loading_view;
 import 'views/error.dart' as error_view;
+import 'views/loading.dart' as loading_view;
+import 'views/main.dart' as main_view;
+
+export 'package:provider/provider.dart';
 
 extension Extension on BuildContext {
   Bloc get bloc => read<Bloc>();
@@ -22,12 +25,22 @@ class Bloc extends base.Bloc {
     final arg = context.arguments;
     final key = arg?.tryGet("key");
     final service = context.server;
+    final data = await service.data;
 
     if (key != await service.accessKey) {
       emit(error_view.ViewState());
       return;
     }
 
-    emit(main_view.ViewState());
+    print(data);
+    if (data['status_code'] != 200) {
+      emit(error_view.ViewState());
+      return;
+    }
+    await Provider.of<CounterProvider>(context, listen: false).initCounter(data['count']);
+    emit(main_view.ViewState(data: data));
   }
+
+  @override
+  void updateView() {}
 }
